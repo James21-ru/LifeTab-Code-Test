@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "motor.h"
+#include "status_led.h"
+#include "hall_sensor.h"
+#include "sleep_manager.h"
+#include "event_handler.h"
+#include "esp_log.h"
+#include "config.h"
+#include "freertos/event_groups.h"
+#include "driver/gpio.h"
