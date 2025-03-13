@@ -5,6 +5,8 @@
 // Глобальная переменная для группы событий
 EventGroupHandle_t event_group;
 
+extern const struct ble_gatt_svc_def gatt_svcs[];
+
 
 // // Главная функция
 // void app_main(void) {
@@ -26,21 +28,6 @@ EventGroupHandle_t event_group;
 
 //     xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
 // }
-
-// Array of pointers to other service definitions
-// UUID - Universal Unique Identifier
-static const struct ble_gatt_svc_def gatt_svcs[] = {
-    {.type = BLE_GATT_SVC_TYPE_PRIMARY,
-     .uuid = BLE_UUID16_DECLARE(0x180),                 // Define UUID for device type
-     .characteristics = (struct ble_gatt_chr_def[]){
-         {.uuid = BLE_UUID16_DECLARE(0xFEF4),           // Define UUID for reading
-          .flags = BLE_GATT_CHR_F_READ,
-          .access_cb = device_read},
-         {.uuid = BLE_UUID16_DECLARE(0xDEAD),           // Define UUID for writing
-          .flags = BLE_GATT_CHR_F_WRITE,
-          .access_cb = device_write},
-         {0}}},
-    {0}};
 
 void app_main() {
     nvs_flash_init();

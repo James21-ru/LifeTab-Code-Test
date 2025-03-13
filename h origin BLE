@@ -1,0 +1,23 @@
+[33mcommit 509a953930b58b1aed2134681accd73299c06693[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mBLE[m[33m)[m
+Author: nfskiy2 <strike2002.st@gmail.com>
+Date:   Wed Mar 12 21:36:23 2025 +0700
+
+    написан модуль ble может только принимать значения с телефона в терминал, заготовка для коммуникации между устройствами
+
+[33mcommit 5a911a7bb982d827f0cbaa44debd15d9862f3fbf[m
+Author: nfskiy2 <strike2002.st@gmail.com>
+Date:   Wed Mar 12 20:06:35 2025 +0700
+
+    блютуз модуль, весь код в мейн файле
+
+[33mcommit 20d68ac7e5446a14246346dde01989e9c559bfea[m[33m ([m[1;31morigin/vibro_motor[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: nfskiy2 <strike2002.st@gmail.com>
+Date:   Sat Feb 22 22:37:40 2025 +0700
+
+    Добавлены файлы конфигурации и CMake файлы
+
+[33mcommit 3f2b18e4caacabaee2ce3db5633c51556e969c05[m
+Author: nfskiy2 <strike2002.st@gmail.com>
+Date:   Fri Feb 14 22:58:46 2025 +0700
+
+    Основная структура проекта и реализован модуль вибрации
