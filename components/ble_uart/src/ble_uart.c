@@ -22,7 +22,13 @@ const struct ble_gatt_svc_def gatt_svcs[] = {
 // Write data to ESP32 defined as server
 int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
 {
-    printf("Data from the client: %.*s\n", ctxt->om->om_len, ctxt->om->om_data);
+    char command[ctxt->om->om_len + 1];
+    memcpy(command, ctxt->om->om_data, ctxt->om->om_len);
+    command[ctxt->om->om_len] = '\0'; // Добавляем null-терминатор
+
+    ESP_LOGI(TAG, "Получена команда по BLE: %s", command);
+    bluetooth_command_handle(command);
+
     return 0;
 }
 

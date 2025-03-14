@@ -30,6 +30,7 @@ extern const struct ble_gatt_svc_def gatt_svcs[];
 // }
 
 void app_main() {
+    event_group = xEventGroupCreate(); // Создание группы событий
     nvs_flash_init();
     esp_nimble_hci_init();  // Инициализация HCI (исправлено)
     nimble_port_init();
@@ -40,4 +41,12 @@ void app_main() {
     ble_svc_gatt_init();
     ble_hs_cfg.sync_cb = ble_app_on_sync;
     nimble_port_freertos_init(host_task);
+
+    motor_init();
+    motor_off();
+    
+    status_led_init();
+    hall_sensor_init();
+
+    xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
 }

@@ -10,6 +10,8 @@
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
 #include "sdkconfig.h"
+#include "ble_command_handler.h"
+
 
 void ble_app_advertise(void);
 
