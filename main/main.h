@@ -11,3 +11,4 @@
 #include "freertos/event_groups.h"
 #include "driver/gpio.h"
 #include "ble_uart.h"
+#include "charging_manager.h"

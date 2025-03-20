@@ -8,5 +8,6 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "motor.h"
+#include "charging_manager.h"
 
 void event_task(void *arg);

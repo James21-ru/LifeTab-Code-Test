@@ -6,7 +6,7 @@ void event_task(void *arg) {
     while (1) {
         EventBits_t events = xEventGroupWaitBits(
             event_group,
-            BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP,
+            BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP | CHARGING_STATUS_BIT,
             pdTRUE,  // Сбрасывать биты после обработки
             pdFALSE, // Ждать любое событие
             portMAX_DELAY
@@ -41,6 +41,11 @@ void event_task(void *arg) {
         if (events & BIT_LED_OFF) {
             ESP_LOGI(TAG, "Выключаем светодиод!");
             status_led_off();
+        }
+
+        if (events & CHARGING_STATUS_BIT) {
+            ESP_LOGI(TAG, "зарядка!");
+            status_led_blink();
         }
 
         // if (events & BIT_SLEEP) {

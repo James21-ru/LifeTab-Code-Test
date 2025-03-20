@@ -41,6 +41,7 @@ void app_main() {
     ble_svc_gatt_init();
     ble_hs_cfg.sync_cb = ble_app_on_sync;
     nimble_port_freertos_init(host_task);
+    
 
     motor_init();
     motor_off();
