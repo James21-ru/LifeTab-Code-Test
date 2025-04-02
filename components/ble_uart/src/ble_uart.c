@@ -8,16 +8,20 @@ char *TAG = "BLE-Server";
 // UUID - Universal Unique Identifier
 const struct ble_gatt_svc_def gatt_svcs[] = {
     {.type = BLE_GATT_SVC_TYPE_PRIMARY,
-     .uuid = BLE_UUID16_DECLARE(0x180),                 // Define UUID for device type
+     .uuid = BLE_UUID128_DECLARE(0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 
+                                0x93, 0xF3, 0xA3, 0xB5, 0x01, 0x00, 0x40, 0x6E),  // UUID NUS
      .characteristics = (struct ble_gatt_chr_def[]){
-         {.uuid = BLE_UUID16_DECLARE(0xFEF4),           // Define UUID for reading
-          .flags = BLE_GATT_CHR_F_READ,
+         {.uuid = BLE_UUID128_DECLARE(0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0,
+                                    0x93, 0xF3, 0xA3, 0xB5, 0x03, 0x00, 0x40, 0x6E),  // UUID TX
+          .flags = BLE_GATT_CHR_F_NOTIFY,
           .access_cb = device_read},
-         {.uuid = BLE_UUID16_DECLARE(0xDEAD),           // Define UUID for writing
+         {.uuid = BLE_UUID128_DECLARE(0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0,
+                                    0x93, 0xF3, 0xA3, 0xB5, 0x02, 0x00, 0x40, 0x6E),  // UUID RX
           .flags = BLE_GATT_CHR_F_WRITE,
           .access_cb = device_write},
          {0}}},
     {0}};
+
     
 // Write data to ESP32 defined as server
 int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_access_ctxt *ctxt, void *arg)
@@ -70,10 +74,20 @@ void ble_app_advertise(void)
     struct ble_hs_adv_fields fields;
     const char *device_name;
     memset(&fields, 0, sizeof(fields));
-    device_name = ble_svc_gap_device_name(); // Read the BLE device name
+    
+    // Добавляем UUID сервиса в рекламные данные
+    ble_uuid128_t service_uuid = BLE_UUID128_INIT(0x6E, 0x40, 0x00, 0x01, 0xB5, 0xA3, 0xF3, 0x93, 
+                                                 0xE0, 0xA9, 0xE5, 0x0E, 0x24, 0xDC, 0xCA, 0x9E);
+    fields.uuids128 = &service_uuid;
+    fields.num_uuids128 = 1;
+    fields.uuids128_is_complete = 1;
+    
+    // Имя устройства
+    device_name = ble_svc_gap_device_name();
     fields.name = (uint8_t *)device_name;
     fields.name_len = strlen(device_name);
     fields.name_is_complete = 1;
+    
     ble_gap_adv_set_fields(&fields);
 
     // GAP - device connectivity definition

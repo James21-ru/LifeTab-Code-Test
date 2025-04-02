@@ -34,7 +34,7 @@ void app_main() {
     nvs_flash_init();
     esp_nimble_hci_init();  // Инициализация HCI (исправлено)
     nimble_port_init();
-    ble_svc_gap_device_name_set("BLE-Server");
+    ble_svc_gap_device_name_set("LTab-01P");
     ble_svc_gap_init();
     ble_gatts_count_cfg(gatt_svcs);
     ble_gatts_add_svcs(gatt_svcs);
