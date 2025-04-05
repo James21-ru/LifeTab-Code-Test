@@ -33,6 +33,14 @@ int device_write(uint16_t conn_handle, uint16_t attr_handle, struct ble_gatt_acc
     ESP_LOGI(TAG, "Получена команда по BLE: %s", command);
     bluetooth_command_handle(command);
 
+    // Пример обработки команды
+    if (strcmp(command, "ping") == 0)
+    {
+        ESP_LOGI(TAG, "Отправка ответа на ping");
+        // Отправка ответа
+        os_mbuf_append(ctxt->om, "received ping", strlen("received ping"));
+    }
+
     return 0;
 }
 
@@ -48,17 +56,30 @@ int ble_gap_event(struct ble_gap_event *event, void *arg)
 {
     switch (event->type)
     {
-    // Advertise if connected
     case BLE_GAP_EVENT_CONNECT:
         ESP_LOGI("GAP", "BLE GAP EVENT CONNECT %s", event->connect.status == 0 ? "OK!" : "FAILED!");
-        if (event->connect.status != 0)
+        if (event->connect.status == 0)
+        {
+            // Обработка успешного подключения
+            // powersaving_ble_connect();
+            // ble_connect_vibro();
+            // ble_connect_led();
+        }
+        else
         {
             ble_app_advertise();
         }
         break;
-    // Advertise again after completion of the event
+    case BLE_GAP_EVENT_DISCONNECT:
+        ESP_LOGI("GAP", "BLE GAP EVENT DISCONNECT");
+        // Обработка отключения
+        // powersaving_ble_disconnect();
+        // ble_disconnect_vibro();
+        // ble_disconnect_led();
+        ble_app_advertise();
+        break;
     case BLE_GAP_EVENT_ADV_COMPLETE:
-        ESP_LOGI("GAP", "BLE GAP EVENT");
+        ESP_LOGI("GAP", "BLE GAP EVENT ADV COMPLETE");
         ble_app_advertise();
         break;
     default:
