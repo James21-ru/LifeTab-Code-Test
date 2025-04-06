@@ -6,7 +6,7 @@ void event_task(void *arg) {
     while (1) {
         EventBits_t events = xEventGroupWaitBits(
             event_group,
-            BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP,
+            BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP | ZERO_CELL_LED_ON | FIRST_CELL_LED_ON | SECOND_CELL_LED_ON | THIRD_CELL_LED_ON, 
             pdTRUE,  // Сбрасывать биты после обработки
             pdFALSE, // Ждать любое событие
             portMAX_DELAY
@@ -43,9 +43,52 @@ void event_task(void *arg) {
             status_led_off();
         }
 
-        // if (events & BIT_SLEEP) {
-        //     ESP_LOGI(TAG, "Переход в спящий режим!");
-        //     enter_sleep_mode();
-        // }
+        if (events & ZERO_CELL_LED_ON) {
+            ESP_LOGI(TAG, "Включаем светодиод 0 ячейки!");
+            status_led_on();
+            // xEventGroupClearBits(event_group, ZERO_CELL_LED_ON);
+        }   
+
+        if (events & FIRST_CELL_LED_ON) {
+            ESP_LOGI(TAG, "Включаем светодиод 1 ячейки!");
+            status_led_on();
+            // xEventGroupClearBits(event_group, FIRST_CELL_LED_ON);
+        }   
+
+        if (events & SECOND_CELL_LED_ON) {
+            ESP_LOGI(TAG, "Включаем светодиод 2 ячейки!");
+            status_led_on();
+            // xEventGroupClearBits(event_group, SECOND_CELL_LED_ON);
+        }      
+
+        if (events & THIRD_CELL_LED_ON) {
+            ESP_LOGI(TAG, "Включаем светодиод 3 ячейки!");
+            status_led_on();
+            // xEventGroupClearBits(event_group, THIRD_CELL_LED_ON);
+        }   
+
+        if (events & ZERO_CELL_LED_OFF) {
+            ESP_LOGI(TAG, "Выключаем светодиод 0 ячейки!"); 
+            status_led_off();
+            // xEventGroupClearBits(event_group, ZERO_CELL_LED_OFF);
+        }      
+
+        if (events & FIRST_CELL_LED_OFF) {
+            ESP_LOGI(TAG, "Выключаем светодиод 1 ячейки!");
+            status_led_off();
+            // xEventGroupClearBits(event_group, FIRST_CELL_LED_OFF);
+        }      
+
+        if (events & SECOND_CELL_LED_OFF) {
+            ESP_LOGI(TAG, "Выключаем светодиод 2 ячейки!");
+            status_led_off();
+            // xEventGroupClearBits(event_group, SECOND_CELL_LED_OFF);
+        }         
+
+        if (events & THIRD_CELL_LED_OFF) {
+            ESP_LOGI(TAG, "Выключаем светодиод 3 ячейки!");
+            status_led_off();
+            // xEventGroupClearBits(event_group, THIRD_CELL_LED_OFF);
+        }           
     }
 }
