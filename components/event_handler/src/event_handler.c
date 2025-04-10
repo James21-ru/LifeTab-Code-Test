@@ -15,7 +15,7 @@ int cell_array[] = {
     [BIT_CLEAR_CELL3] = 3
 };
 
-void select_cell(led_strip_handle_t led_strip, int bit_mask){
+void select_cell(int bit_mask){
     int index = cell_array[bit_mask];
     ESP_LOGI(TAG, "Выделили ячейку %d!", index);
     set_pixel_color(led_strip, index, 255, 255, 255); // Белый цвет
@@ -29,7 +29,6 @@ void clear_cell(int bit_mask){
 }
 
 void event_task(void *arg) {
-    led_strip_handle_t led_strip = led_strip_init(4); // Инициализация ленты с 4 светодиодами
     while (1) {
         EventBits_t events = xEventGroupWaitBits(
             event_group,
@@ -76,25 +75,25 @@ void event_task(void *arg) {
         }
 
         if (events & BIT_SELECT_CELL0) {
-            select_cell(led_strip, BIT_SELECT_CELL0);
+            select_cell(BIT_SELECT_CELL0);
         }
         if (events & BIT_CLEAR_CELL0) {
             clear_cell(BIT_CLEAR_CELL0);
         }
         if (events & BIT_SELECT_CELL1) {
-            select_cell(led_strip, BIT_SELECT_CELL1);
+            select_cell(BIT_SELECT_CELL1);
         }
         if (events & BIT_CLEAR_CELL1) {
             clear_cell(BIT_CLEAR_CELL1);
         }
         if (events & BIT_SELECT_CELL2) {
-            select_cell(led_strip, BIT_SELECT_CELL2);
+            select_cell(BIT_SELECT_CELL2);
         }
         if (events & BIT_CLEAR_CELL2) {
             clear_cell(BIT_CLEAR_CELL2);
         }
         if (events & BIT_SELECT_CELL3) {
-            select_cell(led_strip, BIT_SELECT_CELL3);
+            select_cell(BIT_SELECT_CELL3);
         }
         if (events & BIT_CLEAR_CELL3) {
             clear_cell(BIT_CLEAR_CELL3);
