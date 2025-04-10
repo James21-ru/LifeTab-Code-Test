@@ -2,11 +2,44 @@
 
 static const char *TAG = "EVENT_HANDLER";
 
+int cell_array[] = {
+    [BIT_SELECT_CELL0] = 0,
+    [BIT_SELECT_CELL1] = 1,
+    [BIT_SELECT_CELL2] = 2,
+    [BIT_SELECT_CELL3] = 3,
+    [BIT_CLEAR_CELL0] = 0,
+    [BIT_CLEAR_CELL1] = 1,
+    [BIT_CLEAR_CELL2] = 2,
+    [BIT_CLEAR_CELL3] = 3
+};
+
+void select_cell(int bit_mask){
+    int index = cell_array[bit_mask];
+    ESP_LOGI(TAG, "Выделили ячейку %d!", index);
+    status_led_on();
+    motor_on();
+}
+
+void clear_cell(int bit_mask){
+    int index = cell_array[bit_mask];
+    ESP_LOGI(TAG, "Сняли выделение с ячейки %d!", index);
+    status_led_off();
+}
+
 void event_task(void *arg) {
     while (1) {
         EventBits_t events = xEventGroupWaitBits(
             event_group,
+<<<<<<< HEAD
             BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP | ZERO_CELL_LED_ON | FIRST_CELL_LED_ON | SECOND_CELL_LED_ON | THIRD_CELL_LED_ON, 
+=======
+            BIT_HALL_TRIGGERED | BIT_WAKEUP | BIT_MOTOR_ON | BIT_MOTOR_OFF | 
+            BIT_LED_ON | BIT_LED_OFF | BIT_SLEEP | 
+            BIT_CLEAR_CELL0 | BIT_SELECT_CELL0 | 
+            BIT_CLEAR_CELL1 | BIT_SELECT_CELL1 | 
+            BIT_CLEAR_CELL2 | BIT_SELECT_CELL2 | 
+            BIT_CLEAR_CELL3 | BIT_SELECT_CELL3, 
+>>>>>>> d0536ee (реализована обработка команд select и clear)
             pdTRUE,  // Сбрасывать биты после обработки
             pdFALSE, // Ждать любое событие
             portMAX_DELAY
@@ -43,6 +76,7 @@ void event_task(void *arg) {
             status_led_off();
         }
 
+<<<<<<< HEAD
         if (events & ZERO_CELL_LED_ON) {
             ESP_LOGI(TAG, "Включаем светодиод 0 ячейки!");
             status_led_on();
@@ -90,5 +124,32 @@ void event_task(void *arg) {
             status_led_off();
             // xEventGroupClearBits(event_group, THIRD_CELL_LED_OFF);
         }           
+=======
+        if (events & BIT_SELECT_CELL0) {
+            select_cell(BIT_SELECT_CELL0);
+        }
+        if (events & BIT_CLEAR_CELL0) {
+            clear_cell(BIT_CLEAR_CELL0);
+        }
+        if (events & BIT_SELECT_CELL1) {
+            select_cell(BIT_SELECT_CELL1);
+        }
+        if (events & BIT_CLEAR_CELL1) {
+            clear_cell(BIT_CLEAR_CELL1);
+        }
+        if (events & BIT_SELECT_CELL2) {
+            select_cell(BIT_SELECT_CELL2);
+        }
+        if (events & BIT_CLEAR_CELL2) {
+            clear_cell(BIT_CLEAR_CELL2);
+        }
+        if (events & BIT_SELECT_CELL3) {
+            select_cell(BIT_SELECT_CELL3);
+        }
+        if (events & BIT_CLEAR_CELL3) {
+            clear_cell(BIT_CLEAR_CELL3);
+        }
+>>>>>>> d0536ee (реализована обработка команд select и clear)
     }
 }
+    
