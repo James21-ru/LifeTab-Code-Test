@@ -18,7 +18,7 @@ int cell_array[] = {
 void select_cell(int bit_mask){
     int index = cell_array[bit_mask];
     ESP_LOGI(TAG, "Выделили ячейку %d!", index);
-    set_pixel_color(led_strip, index, 255, 255, 255); // Белый цвет
+    status_led_on();
     motor_on();
 }
 

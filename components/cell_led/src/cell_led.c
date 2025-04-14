@@ -1,10 +1,9 @@
-#include "led_strip.h"
-
+#include "cell_led.h"
 // Инициализация светодиодной ленты
 led_strip_handle_t led_strip_init(uint32_t num_leds) {
     led_strip_handle_t strip = NULL;
     led_strip_config_t strip_config = {
-        .strip_gpio_num = 12,  // GPIO для подключения светодиодной ленты
+        .strip_gpio_num = LED_STRIP_GPIO,  // GPIO для подключения светодиодной ленты
         .max_leds = num_leds, // Количество светодиодов
     };
     

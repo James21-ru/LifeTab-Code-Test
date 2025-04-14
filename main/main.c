@@ -1,4 +1,5 @@
 #include "main.h"
+#include "cell_led.h"
 
 // static const char *TAG = "MAIN";  
 
@@ -45,8 +46,20 @@ void app_main() {
     motor_init();
     motor_off();
     
-    status_led_init();
+    // status_led_init();
     hall_sensor_init();
+
+    status_led_init();
+    status_led_blink(); 
+    status_led_on();
+
+    led_strip_handle_t led_strip = led_strip_init(4); // Инициализация ленты с 4 светодиодами
+    for (int i = 0; i < 4; i++) {
+        set_pixel_color(led_strip, i, 255, 255, 255);
+    }
+
+    xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
+    led_strip_refresh(led_strip); // Обновление ленты
 
     xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
 }
