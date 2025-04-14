@@ -53,6 +53,11 @@ void app_main() {
     status_led_blink(); 
     status_led_on();
 
+    ble_connect_led();
+    ble_disconnect_led();
+    notify_led();
+    notify_open_led();
+
     led_strip_handle_t led_strip = led_strip_init(4); // Инициализация ленты с 4 светодиодами
     for (int i = 0; i < 4; i++) {
         set_pixel_color(led_strip, i, 255, 255, 255);

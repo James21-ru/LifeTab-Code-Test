@@ -1,6 +1,7 @@
 #include "status_led.h"
 #include "esp_log.h"
 #include "led_strip.h"
+#include <string.h>
 
 static const char *TAG = "STATUS_LED";
 
@@ -53,7 +54,7 @@ void status_led_off() {
     set_status_led_color(0, 0, 0);
 }
 
-void status_led_blink(void) {
+void status_led_blink() {
     ESP_LOGI(TAG, "Мигаем");
     status_led_on();
     vTaskDelay(100 / portTICK_PERIOD_MS);
@@ -71,4 +72,81 @@ void status_led_blink(void) {
     vTaskDelay(100 / portTICK_PERIOD_MS);
     
     status_led_off();
+}
+
+void charge_mode(const char* color) {
+    if (strcmp(color, "green") == 0) {
+        for (int i = 0; i < 255; i += 2) {
+            set_status_led_color(0, i, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        vTaskDelay(60 / portTICK_PERIOD_MS);
+        for (int i = 255; i > 0; i -= 3) {
+            set_status_led_color(0, i, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        set_status_led_color(0, 0, 0);
+    } else if (strcmp(color, "yellow") == 0) {
+        for (int i = 0; i < 255; i += 2) {
+            set_status_led_color(i, i, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        vTaskDelay(60 / portTICK_PERIOD_MS);
+        for (int i = 255; i > 0; i -= 3) {
+            set_status_led_color(i, i, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        set_status_led_color(0, 0, 0);
+    } else if (strcmp(color, "red") == 0) {
+        for (int i = 0; i < 255; i += 2) {
+            set_status_led_color(i, 0, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        vTaskDelay(60 / portTICK_PERIOD_MS);
+        for (int i = 255; i > 0; i -= 3) {
+            set_status_led_color(i, 0, 0);
+            vTaskDelay(20 / portTICK_PERIOD_MS);
+        }
+        set_status_led_color(0, 0, 0);
+    }
+}
+
+void ble_connect_led() {
+    ESP_LOGI(TAG, "BLE подключение: мигание зелёным");
+    for (int count = 0; count < 2; count++) {
+        set_status_led_color(0, 200, 0);
+        vTaskDelay(400 / portTICK_PERIOD_MS);
+        set_status_led_color(0, 0, 0);
+        vTaskDelay(600 / portTICK_PERIOD_MS);
+    }
+}
+
+void ble_disconnect_led() {
+    ESP_LOGI(TAG, "BLE отключение: мигание красным");
+    for (int count = 0; count < 2; count++) {
+        set_status_led_color(200, 0, 0);
+        vTaskDelay(400 / portTICK_PERIOD_MS);
+        set_status_led_color(0, 0, 0);
+        vTaskDelay(600 / portTICK_PERIOD_MS);
+    }
+}
+
+void notify_led() {
+    ESP_LOGI(TAG, "Уведомление: мигание жёлтым");
+    for (int i = 0; i < 4; i++) {
+        set_status_led_color(255, 255, 0);
+        vTaskDelay(450 / portTICK_PERIOD_MS);
+        set_status_led_color(0, 0, 0);
+        vTaskDelay(450 / portTICK_PERIOD_MS);
+    }
+}
+
+void notify_open_led() {
+    ESP_LOGI(TAG, "Открытое уведомление: мигание синим");
+    for (int i = 0; i < 2; i++) {
+        set_status_led_color(0, 0, 255);
+        vTaskDelay(450 / portTICK_PERIOD_MS);
+        set_status_led_color(0, 0, 0);
+        vTaskDelay(450 / portTICK_PERIOD_MS);
+    }
 }
