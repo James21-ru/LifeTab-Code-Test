@@ -31,3 +31,4 @@ void clear_strip(led_strip_handle_t strip) {
 void delete_strip(led_strip_handle_t strip) {
     led_strip_del(strip);
 }
+

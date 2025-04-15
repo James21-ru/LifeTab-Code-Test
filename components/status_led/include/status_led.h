@@ -9,13 +9,11 @@
 
 
 void status_led_init();
-// Установка цвета для определенного пикселя
+
 void set_status_led_color(uint32_t red, uint32_t green, uint32_t blue);
 
-// Очистка светодиодной ленты
 void clear_status_led();
 
-// Удаление ресурсов светодиодной ленты
 void delete_status_led();
 
 void status_led_on();
@@ -25,7 +23,11 @@ void status_led_off();
 void status_led_blink();
 
 void charge_mode(const char* color);
+
 void ble_connect_led();
+
 void ble_disconnect_led();
+
 void notify_led();
+
 void notify_open_led();

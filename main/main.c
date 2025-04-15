@@ -1,39 +1,16 @@
 #include "main.h"
 #include "cell_led.h"
 
-// static const char *TAG = "MAIN";  
+static const char *TAG = "MAIN";  
 
-// Глобальная переменная для группы событий
 EventGroupHandle_t event_group;
 
 extern const struct ble_gatt_svc_def gatt_svcs[];
 
-
-// // Главная функция
-// void app_main(void) {
-//     event_group = xEventGroupCreate(); // Создание группы событий
-    
-//     motor_init();
-//     motor_off();
-    
-//     status_led_init();
-//     hall_sensor_init();
-
-//     ble_connect_vibro();
-//     vTaskDelay(pdMS_TO_TICKS(2000));
-//     ble_disconnect_vibro();
-//     vTaskDelay(pdMS_TO_TICKS(2000));
-//     notify_vibro();
-//     vTaskDelay(pdMS_TO_TICKS(2000));
-//     notify_open_vibro();
-
-//     xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
-// }
-
 void app_main() {
     event_group = xEventGroupCreate(); // Создание группы событий
     nvs_flash_init();
-    esp_nimble_hci_init();  // Инициализация HCI (исправлено)
+    esp_nimble_hci_init();  // Инициализация HCI 
     nimble_port_init();
     ble_svc_gap_device_name_set("LTab-01P");
     ble_svc_gap_init();
@@ -68,3 +45,24 @@ void app_main() {
 
     xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
 }
+
+// // Главная функция
+// void app_main(void) {
+//     event_group = xEventGroupCreate(); // Создание группы событий
+    
+//     motor_init();
+//     motor_off();
+    
+//     status_led_init();
+//     hall_sensor_init();
+
+//     ble_connect_vibro();
+//     vTaskDelay(pdMS_TO_TICKS(2000));
+//     ble_disconnect_vibro();
+//     vTaskDelay(pdMS_TO_TICKS(2000));
+//     notify_vibro();
+//     vTaskDelay(pdMS_TO_TICKS(2000));
+//     notify_open_vibro();
+
+//     xTaskCreate(event_task, "event_task", 2048, NULL, 10, NULL);
+// }

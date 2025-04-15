@@ -1,6 +1,6 @@
 #include "hall_sensor.h"
 
-// static const char *TAG = "HALL_SENSOR";
+static const char *TAG = "HALL_SENSOR";
 
 // Прерывание датчика Хола
 void IRAM_ATTR hall_sensor_isr_handler(void *arg) { 

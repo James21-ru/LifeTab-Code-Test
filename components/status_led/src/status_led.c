@@ -25,26 +25,19 @@ void status_led_init(void) {
     ESP_LOGI(TAG, "Статусный светодиод успешно инициализирован");
 }
 
-
-
-
-// Установка цвета для определенного пикселя
 void set_status_led_color(uint32_t red, uint32_t green, uint32_t blue) {
     led_strip_set_pixel(status_led, 0, red, green, blue);
     led_strip_refresh(status_led);
 }
 
-// Очистка светодиодной ленты
 void clear_status_led() {
     led_strip_clear(status_led);
     led_strip_refresh(status_led);
 }
 
-// Удаление ресурсов светодиодной ленты
 void delete_status_led() {
     led_strip_del(status_led);
 }
-
 
 void status_led_on() {
     set_status_led_color(255, 255, 255);
@@ -142,7 +135,7 @@ void notify_led() {
 }
 
 void notify_open_led() {
-    ESP_LOGI(TAG, "Открытое уведомление: мигание синим");
+    ESP_LOGI(TAG, "Уведомление об открытии: мигание синим");
     for (int i = 0; i < 2; i++) {
         set_status_led_color(0, 0, 255);
         vTaskDelay(450 / portTICK_PERIOD_MS);

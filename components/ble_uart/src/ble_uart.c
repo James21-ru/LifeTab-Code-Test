@@ -4,8 +4,6 @@ static uint8_t ble_addr_type;
 
 char *TAG = "BLE-Server";
 
-// Array of pointers to other service definitions
-// UUID - Universal Unique Identifier
 const struct ble_gatt_svc_def gatt_svcs[] = {
     {.type = BLE_GATT_SVC_TYPE_PRIMARY,
      .uuid = BLE_UUID128_DECLARE(0x9E, 0xCA, 0xDC, 0x24, 0x0E, 0xE5, 0xA9, 0xE0, 
@@ -114,20 +112,20 @@ void ble_app_advertise(void)
     // GAP - device connectivity definition
     struct ble_gap_adv_params adv_params;
     memset(&adv_params, 0, sizeof(adv_params));
-    adv_params.conn_mode = BLE_GAP_CONN_MODE_UND; // connectable or non-connectable
-    adv_params.disc_mode = BLE_GAP_DISC_MODE_GEN; // discoverable or non-discoverable
+    adv_params.conn_mode = BLE_GAP_CONN_MODE_UND; 
+    adv_params.disc_mode = BLE_GAP_DISC_MODE_GEN; 
     ble_gap_adv_start(ble_addr_type, NULL, BLE_HS_FOREVER, &adv_params, ble_gap_event, NULL);
 }
 
-// The application
+
 void ble_app_on_sync(void)
 {
-    ble_hs_id_infer_auto(0, &ble_addr_type); // Determines the best address type automatically
-    ble_app_advertise();                     // Define the BLE connection
+    ble_hs_id_infer_auto(0, &ble_addr_type); 
+    ble_app_advertise();                     
 }
 
-// The infinite task
+
 void host_task(void *param)
 {
-    nimble_port_run(); // This function will return only when nimble_port_stop() is executed
+    nimble_port_run(); 
 }
