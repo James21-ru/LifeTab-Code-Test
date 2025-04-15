@@ -8,6 +8,7 @@
 #include "esp_log.h"
 
 
-void select_cell(int cell_number);
-void clear_cell(int cell_number);
+// void select_cell(int cell_number);
+// void clear_cell(int cell_number);
 void bluetooth_command_handle(const char *command);
+void append_json_data(const char* json_data);
