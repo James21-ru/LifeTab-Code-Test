@@ -46,12 +46,10 @@ void bluetooth_command_handle(const char *command) {
         xEventGroupSetBits(event_group, BIT_CLEAR_CELL3);
 
     } else if (strcmp(command, "start_trans") == 0) {
-        ESP_LOGI(TAG, "Обработка команды: start_trans");
         json_buffer[0] = '\0'; // Очистка буфера перед началом новой транзакции
         receiving_json = true; // Начало приема JSON
 
     } else if (strcmp(command, "fin_trans") == 0) {
-        ESP_LOGI(TAG, "Обработка команды: fin_trans");
         ESP_LOGI(TAG, "Полученные JSON данные: %s", json_buffer); // Вывод данных на экран
         receiving_json = false; // Завершение приема JSON
 
